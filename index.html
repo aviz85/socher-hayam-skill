@@ -210,7 +210,7 @@
       margin-bottom: 48px;
       opacity: 0;
       animation: slide-up 0.6s ease 4.6s forwards;
-      direction: ltr;
+      direction: rtl;
     }
 
     @keyframes slide-up {
@@ -279,7 +279,7 @@
     }
 
     /* ============================
-       WHAT IS THIS
+       PANELS
        ============================ */
     .panel {
       background: var(--bg-panel);
@@ -328,37 +328,6 @@
     .highlight-green {
       color: var(--green);
       text-shadow: var(--glow);
-    }
-
-    /* ============================
-       GAME INFO TABLE
-       ============================ */
-    .dos-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-family: 'VT323', monospace;
-      font-size: 20px;
-      direction: ltr;
-      margin-top: 24px;
-    }
-
-    .dos-table th {
-      color: var(--amber);
-      border-bottom: 1px solid var(--green-dark);
-      padding: 8px 16px;
-      text-align: left;
-      font-weight: normal;
-    }
-
-    .dos-table td {
-      padding: 8px 16px;
-      border-bottom: 1px solid #001a00;
-      color: var(--green-dim);
-    }
-
-    .dos-table tr:hover td {
-      background: #001500;
-      color: var(--green);
     }
 
     /* ============================
@@ -444,85 +413,14 @@
     }
 
     /* ============================
-       AI GAP SECTION
-       ============================ */
-    .gap-diagram {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0;
-      align-items: center;
-      margin: 32px 0;
-      direction: ltr;
-    }
-
-    .gap-box {
-      background: var(--bg-panel);
-      border: 1px solid var(--green-dark);
-      padding: 20px;
-      text-align: center;
-    }
-
-    .gap-box.problem {
-      border-color: #ff0040;
-      box-shadow: 0 0 8px #ff004055;
-    }
-
-    .gap-box.solution {
-      border-color: var(--green);
-      box-shadow: var(--glow);
-    }
-
-    .gap-box-label {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      color: var(--amber);
-      margin-bottom: 10px;
-    }
-
-    .gap-box-text {
-      font-size: 18px;
-      color: var(--green-dim);
-      line-height: 1.4;
-    }
-
-    .gap-arrow {
-      text-align: center;
-      font-size: 36px;
-      color: var(--amber);
-      padding: 0 16px;
-      text-shadow: var(--glow-amber);
-    }
-
-    .patch-list {
-      list-style: none;
-      margin: 24px 0;
-    }
-
-    .patch-list li {
-      padding: 10px 0;
-      border-bottom: 1px solid #001a00;
-      display: flex;
-      gap: 12px;
-      font-size: 20px;
-      direction: rtl;
-    }
-
-    .patch-list li::before {
-      content: '[OK]';
-      color: var(--amber);
-      font-family: 'VT323', monospace;
-      white-space: nowrap;
-      text-shadow: var(--glow-amber);
-    }
-
-    /* ============================
-       HOW TO USE
+       TERMINAL WINDOW
        ============================ */
     .terminal-window {
       background: #000;
       border: 2px solid var(--green-dim);
       box-shadow: var(--glow), 0 0 40px rgba(0,255,65,0.1);
       direction: ltr;
+      margin-bottom: 24px;
     }
 
     .terminal-titlebar {
@@ -564,6 +462,9 @@
       font-size: 24px;
     }
 
+    /* ============================
+       STEP LIST
+       ============================ */
     .step-list {
       list-style: none;
       margin: 24px 0;
@@ -574,9 +475,10 @@
       display: flex;
       gap: 16px;
       align-items: flex-start;
-      padding: 12px 0;
+      padding: 16px 0;
       border-bottom: 1px dashed var(--green-dark);
-      font-size: 20px;
+      font-size: 21px;
+      line-height: 1.6;
     }
 
     .step-num {
@@ -585,8 +487,8 @@
       color: var(--amber);
       background: #001500;
       border: 1px solid var(--amber-dim);
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -603,6 +505,32 @@
       font-size: 17px;
       padding: 2px 8px;
       margin: 0 2px;
+    }
+
+    /* ============================
+       CHECK LIST
+       ============================ */
+    .check-list {
+      list-style: none;
+      margin: 20px 0;
+      direction: rtl;
+    }
+
+    .check-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #001a00;
+      display: flex;
+      gap: 12px;
+      font-size: 21px;
+      align-items: center;
+    }
+
+    .check-list li .chk {
+      color: var(--amber);
+      font-family: 'VT323', monospace;
+      white-space: nowrap;
+      text-shadow: var(--glow-amber);
+      flex-shrink: 0;
     }
 
     /* ============================
@@ -680,17 +608,7 @@
        RESPONSIVE
        ============================ */
     @media (max-width: 600px) {
-      .gap-diagram {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-      }
-      .gap-arrow {
-        transform: rotate(90deg);
-        padding: 8px 0;
-      }
-      .ascii-art {
-        font-size: 8px;
-      }
+      .ascii-art { font-size: 8px; }
     }
 
     /* Flicker animation for CRT effect */
@@ -710,7 +628,6 @@
 </head>
 <body>
 
-  <!-- Custom cursor -->
   <div class="cursor" id="cursor"></div>
   <div class="noise-overlay"></div>
 
@@ -720,70 +637,46 @@
     <span class="boot-cursor"></span>
   </div>
 
-  <!-- Main Content -->
   <main>
 
-    <!-- ==============================
-         HERO
-         ============================== -->
+    <!-- HERO -->
     <section id="hero">
       <pre id="ship-animation" class="ascii-art" style="font-size:clamp(11px,1.4vw,15px);letter-spacing:0.05em;line-height:1.2;"></pre>
 
       <div class="hero-title">סוחר הים</div>
-      <div class="hero-subtitle">AI שיכול לשחק משחק DOS עברי משנת 1989</div>
-      <div class="hero-en">A Claude Code Skill for Playing Classic Hebrew DOS Games<span class="blink-cursor"></span></div>
+      <div class="hero-subtitle">סקיל לקלוד קוד שמשחק משחק DOS עברי מ-1989</div>
+      <div class="hero-en">קלוד פותח דפדפן, טוען DOSBox, ומשחק — אוטומטית<span class="blink-cursor"></span></div>
 
       <div class="hero-line"></div>
 
       <div class="hero-badge">CLAUDE CODE SKILL v1.0</div>
     </section>
 
-    <!-- ==============================
-         WHAT IS THIS
-         ============================== -->
+    <!-- [01] מה זה? -->
     <section id="what" class="reveal">
       <div class="section-header">
         <span class="section-number">[01]</span>
-        מה זה סוחר הים?
+        מה זה?
       </div>
 
-      <div class="panel rtl-text" data-label="// GAME.INFO">
+      <div class="panel rtl-text" data-label="// INFO">
         <p>
-          <span class="highlight">סוחר הים</span> הוא משחק DOS עברי קלאסי משנת 1989 — משחק אסטרטגיה מסחרית שבו אתה סוחר באנייה בין
-          ישראל, תורכיה ומצרים. קונה נחושת, זיתים וחיטה; מוכר ברווח; נמנע מפיראטים — הכל בתוך 7 ימים.
+          <span class="highlight">סוחר הים</span> הוא משחק DOS עברי קלאסי משנת 1989 — אסטרטגיית מסחר ימי בין ישראל, תורכיה ומצרים.
+          קונים סחורות בנמל אחד, מוכרים ברווח בנמל אחר, ומנסים להגיע לסוף 7 הימים עם כמה שיותר כסף.
         </p>
         <p>
-          המשחק רץ היום בדפדפן דרך <span class="highlight">DOSBox אונליין</span> — אמולטור DOS הפועל בתוך Canvas של HTML.
-          אין כפתורים. אין תפריטים מודרניים. רק מקלדת, תווים עבריים, וממשק שצייר מישהו בשנות ה-80.
+          הסקיל הזה מאפשר לקלוד קוד לשחק את המשחק <span class="highlight">אוטומטית לגמרי</span> —
+          פותח דפדפן, מכניס קלטים, מנווט בתפריטים, וצולם GIF של כל הסשן.
+          הכל קורה בלי שתגע במקלדת.
         </p>
       </div>
-
-      <table class="dos-table">
-        <thead>
-          <tr>
-            <th>ITEM</th>
-            <th>VALUE</th>
-            <th>NOTES</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Game Year</td><td class="highlight">1989</td><td>Hebrew DOS classic</td></tr>
-          <tr><td>Platform</td><td class="highlight">DOSBox / Browser</td><td>old-games.org</td></tr>
-          <tr><td>Duration</td><td class="highlight">7 days</td><td>in-game time</td></tr>
-          <tr><td>Ship Capacity</td><td class="highlight">14 units</td><td>max cargo</td></tr>
-          <tr><td>Goal</td><td class="highlight">MAX profit</td><td>buy low, sell high</td></tr>
-          <tr><td>Control</td><td class="highlight">Keyboard only</td><td>↑↓ Enter Escape</td></tr>
-        </tbody>
-      </table>
     </section>
 
-    <!-- ==============================
-         GALLERY
-         ============================== -->
+    <!-- [02] גלריה -->
     <section id="gallery" class="reveal">
       <div class="section-header">
         <span class="section-number">[02]</span>
-        Screenshots
+        צילומי מסך
       </div>
 
       <div class="gallery-grid">
@@ -796,7 +689,7 @@
               <span class="win-btn">×</span>
             </div>
           </div>
-          <img src="images/socher1-ship.jpg" alt="Sea Merchant - Ship at sea">
+          <img src="images/socher1-ship.jpg" alt="האנייה בים">
           <div class="dos-frame-caption">האנייה בים — מסחר בין נמלים</div>
         </div>
 
@@ -809,7 +702,7 @@
               <span class="win-btn">×</span>
             </div>
           </div>
-          <img src="images/socher2-market.jpg" alt="Mediterranean marketplace">
+          <img src="images/socher2-market.jpg" alt="שוק הים התיכון">
           <div class="dos-frame-caption">שוק הים התיכון — נחושת, זיתים, חיטה</div>
         </div>
 
@@ -822,73 +715,102 @@
               <span class="win-btn">×</span>
             </div>
           </div>
-          <img src="images/socher3-map.jpg" alt="Mediterranean trade map">
+          <img src="images/socher3-map.jpg" alt="מפת המסחר">
           <div class="dos-frame-caption">מפת המסחר — ישראל ↔ תורכיה ↔ מצרים</div>
         </div>
       </div>
     </section>
 
-    <!-- ==============================
-         THE AI GAP
-         ============================== -->
-    <section id="gap" class="reveal">
+    <!-- [03] דרישות -->
+    <section id="requirements" class="reveal">
       <div class="section-header">
         <span class="section-number">[03]</span>
-        The AI Gap — הפער
+        דרישה: תוסף Claude in Chrome
       </div>
 
-      <div class="panel rtl-text" data-label="// PROBLEM.SYS">
+      <div class="panel rtl-text" data-label="// REQUIRED">
         <p>
-          AI agents חכמים — הם מבינים אסטרטגיה, מחשבים רווח, מתכננים מסלולים.
-          אבל כשהם פוגשים ממשק כמו DOSBox? <span class="highlight">הם אבודים לגמרי.</span>
-        </p>
-        <p>
-          הבעיה היא לא חכמה — היא <span class="highlight">היעדר הקשר</span>.
-          האיים מה אדום = נבחר, מה כחול = יעד, שה-Enter בשדה מספר מגיע אחרי הספרה.
-          זה "שכל ישר" שאין לו. זה "חוש מרחבי" שאף אחד לא לימד אותו.
+          הסקיל שולט בדפדפן ישירות מהטרמינל. בשביל זה צריך את
+          <span class="highlight">תוסף Chrome הרשמי של Claude</span> — ללא התוסף קלוד לא יכול לפתוח דפדפן ולשחק.
         </p>
       </div>
 
-      <div class="gap-diagram">
-        <div class="gap-box problem">
-          <div class="gap-box-label">WITHOUT SKILL</div>
-          <div class="gap-box-text">Agent stares at Canvas<br>Presses random keys<br>Gets stuck in menus<br>Fails miserably</div>
-        </div>
-        <div class="gap-arrow">→</div>
-        <div class="gap-box solution">
-          <div class="gap-box-label">WITH SKILL</div>
-          <div class="gap-box-text">Agent knows the rules<br>Navigates confidently<br>Trades profitably<br>Wins the game</div>
-        </div>
-      </div>
-
-      <div class="panel rtl-text" data-label="// SOLUTION.PATCH">
-        <p>
-          <span class="highlight">Skills הם Patches.</span> כמו תיקון מערכת הפעלה — הם ממלאים את הפערים הספציפיים.
-          לא צריך לאמן מחדש את המודל. צריך לתת לו קובץ SKILL.md שמסביר את הממשק.
-        </p>
-        <p>
-          זה עובד לא רק לסוחר הים — זה עובד לכל מערכת ישנה שה-AI לא מכיר: Excel מורכב, אתרי ביטוח,
-          CRM נישתי, ממשקי legacy — כל אלה יכולים לקבל "patch" בצורת skill.
-        </p>
-      </div>
-
-      <ul class="patch-list">
-        <li>אדום = נבחר. ירוק = לא נבחר. Enter רק על אדום.</li>
-        <li>ניווט עם חצים בלבד — עכבר לא עובד בכלל</li>
-        <li>Enter בשדה מספר — אחרי הספרות, לא לפניהן</li>
-        <li>קליק על ה-Canvas לפני כל קלט מקלדת</li>
-        <li>תיבה כחולה במפה = עיר יעד נבחרת</li>
-        <li>חכה לאנימציות — אל תלחץ קלידים בזמן הפלגה</li>
+      <ul class="step-list">
+        <li>
+          <div class="step-num">01</div>
+          <div>
+            התקינו את התוסף מה-Chrome Web Store:<br>
+            <a href="https://chromewebstore.google.com/publisher/anthropic/u308d63ea0533efcf7ba778ad42da7390"
+               style="color:var(--green);text-shadow:var(--glow);text-decoration:none;font-size:19px;"
+               target="_blank">chromewebstore.google.com &larr; "Claude in Chrome"</a>
+          </div>
+        </li>
+        <li>
+          <div class="step-num">02</div>
+          <div>
+            היכנסו ל-<span class="highlight">claude.ai</span> בכרום — התוסף מתחבר אוטומטית לחשבון הקיים.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">03</div>
+          <div>
+            וודאו שאייקון התוסף בסרגל הכלים <span class="highlight">פעיל (לא אפור)</span>.
+            אם הוא אפור — נסו להיכנס שוב ל-claude.ai.
+          </div>
+        </li>
+        <li>
+          <div class="step-num">04</div>
+          <div>
+            הפעילו Claude Code עם הדגל <span class="kbd">--chrome</span> כדי לאפשר שליטה בדפדפן:
+            <div style="margin-top:10px;background:#000;border:1px solid var(--green-dark);padding:12px 16px;direction:ltr;font-size:20px;">
+              <span style="color:var(--amber);">$</span> <span style="color:var(--green);text-shadow:var(--glow);">claude --chrome</span>
+            </div>
+          </div>
+        </li>
       </ul>
     </section>
 
-    <!-- ==============================
-         HOW TO USE
-         ============================== -->
-    <section id="usage" class="reveal">
+    <!-- [04] התקנת הסקיל -->
+    <section id="install" class="reveal">
       <div class="section-header">
         <span class="section-number">[04]</span>
-        How to Use
+        התקנת הסקיל
+      </div>
+
+      <div class="panel rtl-text" data-label="// INSTALL">
+        <p>
+          לאחר שהתוסף מותקן ו-Claude Code פועל עם <span class="kbd">--chrome</span>,
+          הדביקו את הפרומפט הבא בתוך קלוד — והוא יתקין את הסקיל לבד:
+        </p>
+      </div>
+
+      <div style="position:relative;margin-bottom:16px;">
+        <div id="install-prompt" style="background:#000;border:2px solid var(--green-dim);box-shadow:var(--glow);padding:20px 20px 20px 80px;font-size:17px;color:var(--green);line-height:1.8;white-space:pre-wrap;direction:ltr;">I found a Claude Code skill I'd like to install: https://github.com/aviz85/socher-hayam-skill
+
+Please consult the claude-code-guide agent to learn how skills work and how to install them, then install this skill for me. The skill file is located at skill/SKILL.md in the repository above. Create the folder ~/.claude/skills/socher-hayam/ if it doesn't exist, and place the SKILL.md file there.</div>
+        <button onclick="copyPrompt()" id="copy-btn" style="position:absolute;top:10px;left:10px;background:var(--green-dark);border:1px solid var(--green-dim);color:var(--green);font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 10px;cursor:pointer;letter-spacing:1px;">
+          [ COPY ]
+        </button>
+      </div>
+      <div id="copy-confirm" style="color:var(--amber);font-size:17px;margin-bottom:16px;opacity:0;transition:opacity 0.3s;direction:rtl;">
+        ✓ הועתק — הדביקו בתוך Claude Code
+      </div>
+
+      <div class="panel ltr-text" data-label="// IMPORTANT">
+        <div style="font-size:20px;line-height:2;color:var(--green-dim);direction:rtl;text-align:right;">
+          <span style="color:var(--amber);">[!]</span> לאחר ההתקנה — <span class="highlight-green">סגרו והפעילו מחדש</span> את Claude Code.
+          סקילים נטענים רק בהפעלה.<br>
+          <span style="color:var(--amber);">[!]</span> הפעילו מחדש עם <span class="kbd">claude --chrome</span>
+          כדי שכלי הדפדפן יהיו זמינים.
+        </div>
+      </div>
+    </section>
+
+    <!-- [05] שימוש -->
+    <section id="usage" class="reveal">
+      <div class="section-header">
+        <span class="section-number">[05]</span>
+        שימוש
       </div>
 
       <div class="terminal-window">
@@ -901,156 +823,49 @@
             <span class="prompt">user@claude-code:~$</span>
             <span class="command-highlight">/socher-hayam</span>
           </div>
-          <div class="terminal-output">Loading Socher Hayam skill...</div>
-          <div class="terminal-output">[OK] Browser automation initialized</div>
-          <div class="terminal-output">[OK] DOSBox emulator loaded at old-games.org</div>
-          <div class="terminal-output">[OK] Game canvas focused</div>
-          <div class="terminal-output">[OK] GIF recording started</div>
-          <div class="terminal-output highlight">Claude is now playing Sea Merchant 1989 <span class="blink-cursor"></span></div>
+          <div class="terminal-output">[טוען סקיל...]</div>
+          <div class="terminal-output">[OK] אוטומציית דפדפן אותחלה</div>
+          <div class="terminal-output">[OK] DOSBox נטען בדפדפן</div>
+          <div class="terminal-output">[OK] המשחק פועל</div>
+          <div class="terminal-output">[OK] הקלטת GIF התחילה</div>
+          <div class="terminal-output highlight">קלוד משחק סוחר הים 1989 <span class="blink-cursor"></span></div>
         </div>
       </div>
 
-      <ul class="step-list">
-        <li>
-          <div class="step-num">01</div>
-          <div>פתח <span class="highlight">Claude Code</span> בטרמינל</div>
-        </li>
-        <li>
-          <div class="step-num">02</div>
-          <div>הקלד <span class="kbd">/socher-hayam</span> ולחץ Enter</div>
-        </li>
-        <li>
-          <div class="step-num">03</div>
-          <div>Claude פותח דפדפן, טוען DOSBox, ומתחיל לשחק — אוטומטית</div>
-        </li>
-        <li>
-          <div class="step-num">04</div>
-          <div>הסקיל מנחה את Claude: ניווט, קנייה, מכירה, הפלגה, הימנעות מפיראטים</div>
-        </li>
-        <li>
-          <div class="step-num">05</div>
-          <div>בסוף המשחק — GIF מוכן של כל הסשן<span class="highlight"> אוטומטית</span></div>
-        </li>
-      </ul>
-
-      <div class="panel ltr-text" data-label="// SKILL.PATH" style="margin-top: 24px;">
-        <p style="font-size: 18px; color: var(--green-dim);">
-          Skill location: <span class="highlight-green">~/.claude/skills/socher-hayam/SKILL.md</span><br>
-          Game URL: <span class="highlight-green">https://www.old-games.org/onlineGame/socher1</span>
-        </p>
+      <div class="panel rtl-text" data-label="// CHECKLIST">
+        <p>לפני שמריצים — ודאו:</p>
+        <ul class="check-list">
+          <li><span class="chk">[✓]</span> תוסף Claude in Chrome מותקן</li>
+          <li><span class="chk">[✓]</span> מחוברים ל-claude.ai בכרום</li>
+          <li><span class="chk">[✓]</span> אייקון התוסף פעיל בסרגל הכלים</li>
+          <li><span class="chk">[✓]</span> הסקיל מותקן ב-~/.claude/skills/socher-hayam/</li>
+          <li><span class="chk">[✓]</span> Claude Code הופעל עם <span class="kbd">claude --chrome</span></li>
+          <li><span class="chk">[→]</span> הקלידו <span class="kbd">/socher-hayam</span> ותהנו</li>
+        </ul>
       </div>
-    </section>
-
-    <!-- ==============================
-         SETUP / INSTALL
-         ============================== -->
-    <section id="setup" class="reveal">
-      <div class="section-header">
-        <span class="section-number">[05]</span>
-        Setup — התקנה
-      </div>
-
-      <!-- Step A: Chrome Extension -->
-      <div class="panel ltr-text" data-label="// STEP_A: CHROME EXTENSION">
-        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
-          REQUIREMENT: Claude in Chrome Extension
-        </div>
-        <p style="font-size:19px;line-height:1.7;color:var(--green-dim);">
-          This skill uses <span class="highlight-green">browser automation</span> — Claude controls Chrome directly from the terminal.
-          You need the official Chrome extension installed and connected first.
-        </p>
-        <div style="margin-top:20px;border:1px dashed var(--green-dark);padding:16px;">
-          <div style="font-size:16px;color:var(--green-dim);margin-bottom:12px;">// INSTALL STEPS</div>
-          <div style="font-size:20px;line-height:2;">
-            <span style="color:var(--amber);">[1]</span> Install the extension from the Chrome Web Store:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://chromewebstore.google.com/publisher/anthropic/u308d63ea0533efcf7ba778ad42da7390"
-               style="color:var(--green);text-shadow:var(--glow);text-decoration:none;font-size:18px;"
-               target="_blank">chromewebstore.google.com → "Claude in Chrome"</a><br>
-            <span style="color:var(--amber);">[2]</span> Sign in to <span class="highlight-green">claude.ai</span> in Chrome (the extension will connect automatically)<br>
-            <span style="color:var(--amber);">[3]</span> Launch Claude Code with the <span class="kbd">--chrome</span> flag to enable browser tools:<br>
-          </div>
-          <div style="margin-top:12px;background:#000;border:1px solid var(--green-dark);padding:12px 16px;font-size:20px;">
-            <span style="color:var(--amber);">$</span> <span style="color:var(--green);text-shadow:var(--glow);">claude --chrome</span>
-          </div>
-          <div style="font-size:17px;color:var(--green-dark);margin-top:8px;">
-            // This enables all mcp__claude-in-chrome__* tools for browser automation
-          </div>
-        </div>
-      </div>
-
-      <!-- Step B: Install the skill -->
-      <div class="panel ltr-text" data-label="// STEP_B: INSTALL SKILL">
-        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
-          ONE-COMMAND SKILL INSTALL
-        </div>
-        <p style="font-size:19px;color:var(--green-dim);line-height:1.7;margin-bottom:20px;">
-          Once Claude Code is running, paste this prompt — Claude will install the skill automatically:
-        </p>
-
-        <div style="position:relative;">
-          <div id="install-prompt" style="background:#000;border:2px solid var(--green-dim);box-shadow:var(--glow);padding:20px;font-size:17px;color:var(--green);line-height:1.8;white-space:pre-wrap;direction:ltr;">I found a Claude Code skill I'd like to install: https://github.com/aviz85/socher-hayam-skill
-
-Please consult the claude-code-guide agent to learn how skills work and how to install them, then install this skill for me. The skill file is located at skill/SKILL.md in the repository above. Create the folder ~/.claude/skills/socher-hayam/ if it doesn't exist, and place the SKILL.md file there.</div>
-          <button onclick="copyPrompt()" id="copy-btn" style="position:absolute;top:10px;left:10px;background:var(--green-dark);border:1px solid var(--green-dim);color:var(--green);font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 12px;cursor:pointer;letter-spacing:1px;">
-            [ COPY ]
-          </button>
-        </div>
-        <div id="copy-confirm" style="color:var(--amber);font-size:17px;margin-top:10px;opacity:0;transition:opacity 0.3s;">
-          ✓ Copied to clipboard — paste into Claude Code
-        </div>
-      </div>
-
-      <!-- Step C: Restart + verify -->
-      <div class="panel ltr-text" data-label="// STEP_C: RESTART &amp; VERIFY">
-        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
-          IMPORTANT: RESTART REQUIRED
-        </div>
-        <div style="font-size:20px;line-height:2;color:var(--green-dim);">
-          <span style="color:var(--amber);">[!]</span> After installing the skill, <span class="highlight-green">exit Claude Code and restart it</span> —
-          new skills are only loaded at startup.<br>
-          <span style="color:var(--amber);">[!]</span> Make sure to launch with <span class="kbd">claude --chrome</span> so browser automation is available.<br>
-          <span style="color:var(--amber);">[!]</span> Verify the Chrome extension is connected: the Claude icon in your browser toolbar should be <span class="highlight-green">active (not greyed out)</span>.<br>
-          <span style="color:var(--amber);">[✓]</span> Then just type <span class="kbd">/socher-hayam</span> and watch Claude play.
-        </div>
-        <div style="margin-top:20px;background:#000;border:1px solid var(--green-dark);padding:14px 18px;font-size:19px;direction:ltr;">
-          <span style="color:var(--green-dark);">// quick checklist before you run</span><br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Claude in Chrome extension installed<br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Signed in to claude.ai in Chrome<br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Extension icon is active in toolbar<br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Skill installed at ~/.claude/skills/socher-hayam/<br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Restarted Claude Code with <span style="color:var(--green);">claude --chrome</span><br>
-          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Type <span style="color:var(--green);">/socher-hayam</span> → <span style="color:var(--amber);">enjoy!</span>
-        </div>
-      </div>
-
     </section>
 
   </main>
 
-  <!-- ==============================
-       FOOTER
-       ============================== -->
   <footer>
     <pre class="footer-ascii">
 +--------------------------------------------------+
 |  SOCHER HAYAM SKILL © 2025  |  CLAUDE CODE LAB   |
-|  Version 1.0.0              |  Made with ♥ + AI  |
+|  Version 1.0.0              |  Made with heart + AI  |
 +--------------------------------------------------+
     </pre>
     <p class="footer-text">
-      Built with <span class="highlight">Claude Code</span> ·
+      נבנה עם <span class="highlight">Claude Code</span> ·
       <a href="https://github.com/aviz85/socher-hayam-skill" class="footer-link">GitHub</a> ·
-      Powered by DOSBox & Anthropic
+      מופעל על-ידי DOSBox ו-Anthropic
     </p>
     <p class="footer-text" style="margin-top: 8px; font-size: 14px;">
-      press <span class="kbd">any key</span> to continue_
+      לחץ <span class="kbd">כל מקש</span> להמשך_
     </p>
   </footer>
 
   <script>
-    // ==============================
     // COPY PROMPT
-    // ==============================
     function copyPrompt() {
       const text = document.getElementById('install-prompt').textContent;
       navigator.clipboard.writeText(text).then(() => {
@@ -1069,29 +884,25 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
       });
     }
 
-    // ==============================
     // CUSTOM CURSOR
-    // ==============================
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
     });
 
-    // ==============================
     // BOOT SEQUENCE
-    // ==============================
     const bootLines = [
       { text: 'SOCHER-HAYAM OS v1.0.0 Copyright (C) 2025', delay: 100 },
-      { text: 'Checking memory... 640K OK', delay: 400 },
-      { text: 'Loading CLAUDE.EXE...', delay: 700 },
-      { text: '<ok>PASS</ok> Anthropic API initialized', delay: 1100 },
-      { text: '<ok>PASS</ok> Browser automation module loaded', delay: 1400 },
-      { text: '<ok>PASS</ok> DOSBox compatibility layer ready', delay: 1700 },
-      { text: '<ok>PASS</ok> Hebrew character set loaded (CP862)', delay: 2000 },
-      { text: '<ok>PASS</ok> Socher Hayam skill patched successfully', delay: 2300 },
+      { text: 'בודק זיכרון... 640K תקין', delay: 400 },
+      { text: 'טוען CLAUDE.EXE...', delay: 700 },
+      { text: '<ok>PASS</ok> Anthropic API אותחל', delay: 1100 },
+      { text: '<ok>PASS</ok> מודול אוטומציית דפדפן נטען', delay: 1400 },
+      { text: '<ok>PASS</ok> שכבת תאימות DOSBox מוכנה', delay: 1700 },
+      { text: '<ok>PASS</ok> ערכת תווים עברית נטענה (CP862)', delay: 2000 },
+      { text: '<ok>PASS</ok> סקיל סוחר הים הותקן בהצלחה', delay: 2300 },
       { text: '', delay: 2600 },
-      { text: 'Starting SOCHER-HAYAM.EXE...', delay: 2800, amber: true },
+      { text: 'מפעיל SOCHER-HAYAM.EXE...', delay: 2800, amber: true },
     ];
 
     const bootContainer = document.getElementById('boot-lines');
@@ -1102,35 +913,26 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
         const div = document.createElement('div');
         div.className = 'boot-line visible';
         if (amber) div.style.color = '#ffb000';
-
-        // Replace <ok> tags
         div.innerHTML = text.replace(/<ok>(.*?)<\/ok>/g, '<span class="boot-ok">[$1]</span>');
         bootContainer.appendChild(div);
       }, delay);
     });
 
-    // Hide boot screen after boot sequence
     setTimeout(() => {
       bootScreen.classList.add('hidden');
       setTimeout(() => bootScreen.remove(), 600);
     }, 3200);
 
-    // ==============================
     // SCROLL REVEAL
-    // ==============================
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
       });
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ==============================
     // RANDOM SCREEN FLICKER
-    // ==============================
     setInterval(() => {
       if (Math.random() < 0.03) {
         document.body.style.opacity = '0.85';
@@ -1138,42 +940,21 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
       }
     }, 2000);
 
-    // ==============================
     // ASCII SHIP ANIMATION
-    // ==============================
-    const W = 72; // scene width in chars
+    const W = 72;
 
-    // Ship sprite (direction: sailing right→left, mast on left)
-    const SHIP = [
-      "          *     .           *        .       *",
-      "   .          *       .        *          .  ",
-      "         .       *        .         *        ",
-      "              |                              ",
-      "             /|\\                             ",
-      "            / | \\                            ",
-      "       ____/  |  \\____                       ",
-      "      /    \\  |  /    \\                      ",
-      "      \\     \\_|_/     /                      ",
-      "  ~~~~~\\_____________/~~~~~~~~~~~~~~~~~~~~~  ",
-      "  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
-      "  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ",
-    ];
-
-    // Star twinkle chars
-    const STARS = ['.', '*', '+', '·', '✦'];
-
-    // Wave patterns - 3 frames
     const WAVES = [
       "~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~",
       "~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~",
       "^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^",
     ];
 
-    let shipX = W; // starts off-screen right, moves left
+    const STARS = ['.', '*', '+', '·', '✦'];
+
+    let shipX = W;
     let frame = 0;
     let wavePhase = 0;
 
-    // Random stars positions (fixed)
     const starPositions = Array.from({length: 12}, () => ({
       row: Math.floor(Math.random() * 3),
       col: Math.floor(Math.random() * W),
@@ -1186,24 +967,17 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
       if (!el) return;
 
       const scene = [];
-      const shipWidth = 52;
 
-      // Sky rows (3 rows) - with twinkling stars
       for (let r = 0; r < 3; r++) {
         let row = ' '.repeat(W);
-        // Place twinkling stars
         starPositions
           .filter(s => s.row === r && (frame % s.blinkRate) < Math.ceil(s.blinkRate * 0.6))
           .forEach(s => {
-            const pos = s.col;
-            if (pos < row.length) {
-              row = row.slice(0, pos) + s.char + row.slice(pos + 1);
-            }
+            if (s.col < row.length) row = row.slice(0, s.col) + s.char + row.slice(s.col + 1);
           });
         scene.push(row);
       }
 
-      // Ship body rows (9 rows)
       const shipLines = [
         "              |                            ",
         "             /|\\                           ",
@@ -1221,23 +995,17 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
         scene.push(row.slice(0, W));
       }
 
-      // Hull row with waves integrated
       const hullLine = "   ~~~~~\\_____________/~~~~~~~~~~~~~~~~~~~~~";
       let hullRow = WAVES[wavePhase % 3].slice(0, W);
       const hx = Math.max(0, Math.min(sx, W - hullLine.length));
       hullRow = hullRow.slice(0, hx) + hullLine + hullRow.slice(hx + hullLine.length);
       scene.push(hullRow.slice(0, W));
-
-      // Two pure wave rows
-      const w2 = WAVES[(wavePhase + 1) % 3].slice(0, W);
-      const w3 = WAVES[(wavePhase + 2) % 3].slice(0, W);
-      scene.push(w2);
-      scene.push(w3);
+      scene.push(WAVES[(wavePhase + 1) % 3].slice(0, W));
+      scene.push(WAVES[(wavePhase + 2) % 3].slice(0, W));
 
       el.textContent = scene.join('\n');
     }
 
-    // Start after boot screen hides (3.2s) - immediately render first frame
     setTimeout(() => {
       const animEl = document.getElementById('ship-animation');
       if (animEl) {
@@ -1249,7 +1017,6 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
       setInterval(() => {
         frame++;
         wavePhase = frame % 3;
-        // Ship moves: right to left, loops
         shipX -= 0.4;
         if (shipX < -55) shipX = W + 5;
         renderShip();
