@@ -46,6 +46,22 @@ curl -o ~/.claude/skills/socher-hayam/SKILL.md \
   https://raw.githubusercontent.com/aviz85/socher-hayam-skill/master/skill/SKILL.md
 ```
 
+### 3. Restart Claude Code
+
+> **Skills are only loaded at startup.** After installing, exit Claude Code and relaunch it.
+
+```bash
+# Always launch with --chrome for browser automation
+claude --chrome
+```
+
+Before running the skill, verify:
+- [ ] Claude in Chrome extension is installed
+- [ ] Signed in to claude.ai in Chrome
+- [ ] Extension icon is **active** (not greyed out) in the Chrome toolbar
+- [ ] Skill file exists at `~/.claude/skills/socher-hayam/SKILL.md`
+- [ ] Claude Code was restarted with `claude --chrome`
+
 ## Usage
 
 Once installed, run with:

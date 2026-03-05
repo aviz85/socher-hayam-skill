@@ -1000,6 +1000,29 @@ Please consult the claude-code-guide agent to learn how skills work and how to i
         </div>
       </div>
 
+      <!-- Step C: Restart + verify -->
+      <div class="panel ltr-text" data-label="// STEP_C: RESTART &amp; VERIFY">
+        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
+          IMPORTANT: RESTART REQUIRED
+        </div>
+        <div style="font-size:20px;line-height:2;color:var(--green-dim);">
+          <span style="color:var(--amber);">[!]</span> After installing the skill, <span class="highlight-green">exit Claude Code and restart it</span> —
+          new skills are only loaded at startup.<br>
+          <span style="color:var(--amber);">[!]</span> Make sure to launch with <span class="kbd">claude --chrome</span> so browser automation is available.<br>
+          <span style="color:var(--amber);">[!]</span> Verify the Chrome extension is connected: the Claude icon in your browser toolbar should be <span class="highlight-green">active (not greyed out)</span>.<br>
+          <span style="color:var(--amber);">[✓]</span> Then just type <span class="kbd">/socher-hayam</span> and watch Claude play.
+        </div>
+        <div style="margin-top:20px;background:#000;border:1px solid var(--green-dark);padding:14px 18px;font-size:19px;direction:ltr;">
+          <span style="color:var(--green-dark);">// quick checklist before you run</span><br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Claude in Chrome extension installed<br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Signed in to claude.ai in Chrome<br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Extension icon is active in toolbar<br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Skill installed at ~/.claude/skills/socher-hayam/<br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Restarted Claude Code with <span style="color:var(--green);">claude --chrome</span><br>
+          <span style="color:var(--amber);">[</span><span class="highlight-green"> ✓ </span><span style="color:var(--amber);">]</span> Type <span style="color:var(--green);">/socher-hayam</span> → <span style="color:var(--amber);">enjoy!</span>
+        </div>
+      </div>
+
     </section>
 
   </main>
