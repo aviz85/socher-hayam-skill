@@ -727,14 +727,7 @@
          HERO
          ============================== -->
     <section id="hero">
-      <pre class="ascii-art">
- ██████╗ ██████╗  ██████╗██╗  ██╗███████╗██████╗     ██╗  ██╗ █████╗ ██╗   ██╗ █████╗ ███╗   ███╗
-██╔════╝██╔═══██╗██╔════╝██║  ██║██╔════╝██╔══██╗    ██║  ██║██╔══██╗╚██╗ ██╔╝██╔══██╗████╗ ████║
-╚█████╗ ██║   ██║██║     ███████║█████╗  ██████╔╝    ███████║███████║ ╚████╔╝ ███████║██╔████╔██║
- ╚═══██╗██║   ██║██║     ██╔══██║██╔══╝  ██╔══██╗    ██╔══██║██╔══██║  ╚██╔╝  ██╔══██║██║╚██╔╝██║
-██████╔╝╚██████╔╝╚██████╗██║  ██║███████╗██║  ██║    ██║  ██║██║  ██║   ██║   ██║  ██║██║ ╚═╝ ██║
-╚═════╝  ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝     ╚═╝
-      </pre>
+      <pre id="ship-animation" class="ascii-art" style="font-size:clamp(11px,1.4vw,15px);letter-spacing:0.05em;line-height:1.2;"></pre>
 
       <div class="hero-title">סוחר הים</div>
       <div class="hero-subtitle">AI שיכול לשחק משחק DOS עברי משנת 1989</div>
@@ -1039,6 +1032,124 @@
         setTimeout(() => { document.body.style.opacity = '1'; }, 80);
       }
     }, 2000);
+
+    // ==============================
+    // ASCII SHIP ANIMATION
+    // ==============================
+    const W = 72; // scene width in chars
+
+    // Ship sprite (direction: sailing right→left, mast on left)
+    const SHIP = [
+      "          *     .           *        .       *",
+      "   .          *       .        *          .  ",
+      "         .       *        .         *        ",
+      "              |                              ",
+      "             /|\\                             ",
+      "            / | \\                            ",
+      "       ____/  |  \\____                       ",
+      "      /    \\  |  /    \\                      ",
+      "      \\     \\_|_/     /                      ",
+      "  ~~~~~\\_____________/~~~~~~~~~~~~~~~~~~~~~  ",
+      "  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+      "  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ",
+    ];
+
+    // Star twinkle chars
+    const STARS = ['.', '*', '+', '·', '✦'];
+
+    // Wave patterns - 3 frames
+    const WAVES = [
+      "~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~",
+      "~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~",
+      "^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^~~^",
+    ];
+
+    let shipX = W; // starts off-screen right, moves left
+    let frame = 0;
+    let wavePhase = 0;
+
+    // Random stars positions (fixed)
+    const starPositions = Array.from({length: 12}, () => ({
+      row: Math.floor(Math.random() * 3),
+      col: Math.floor(Math.random() * W),
+      char: STARS[Math.floor(Math.random() * STARS.length)],
+      blinkRate: Math.floor(Math.random() * 5) + 2,
+    }));
+
+    function renderShip() {
+      const el = document.getElementById('ship-animation');
+      if (!el) return;
+
+      const scene = [];
+      const shipWidth = 52;
+
+      // Sky rows (3 rows) - with twinkling stars
+      for (let r = 0; r < 3; r++) {
+        let row = ' '.repeat(W);
+        // Place twinkling stars
+        starPositions
+          .filter(s => s.row === r && (frame % s.blinkRate) < Math.ceil(s.blinkRate * 0.6))
+          .forEach(s => {
+            const pos = s.col;
+            if (pos < row.length) {
+              row = row.slice(0, pos) + s.char + row.slice(pos + 1);
+            }
+          });
+        scene.push(row);
+      }
+
+      // Ship body rows (9 rows)
+      const shipLines = [
+        "              |                            ",
+        "             /|\\                           ",
+        "            / | \\                          ",
+        "       ____/  |  \\____                     ",
+        "      /    \\  |  /    \\                    ",
+        "      \\     \\_|_/     /                    ",
+      ];
+
+      const sx = Math.round(shipX);
+      for (const line of shipLines) {
+        let row = ' '.repeat(W);
+        const insertAt = Math.max(0, Math.min(sx, W - line.length));
+        row = row.slice(0, insertAt) + line + row.slice(insertAt + line.length);
+        scene.push(row.slice(0, W));
+      }
+
+      // Hull row with waves integrated
+      const hullLine = "   ~~~~~\\_____________/~~~~~~~~~~~~~~~~~~~~~";
+      let hullRow = WAVES[wavePhase % 3].slice(0, W);
+      const hx = Math.max(0, Math.min(sx, W - hullLine.length));
+      hullRow = hullRow.slice(0, hx) + hullLine + hullRow.slice(hx + hullLine.length);
+      scene.push(hullRow.slice(0, W));
+
+      // Two pure wave rows
+      const w2 = WAVES[(wavePhase + 1) % 3].slice(0, W);
+      const w3 = WAVES[(wavePhase + 2) % 3].slice(0, W);
+      scene.push(w2);
+      scene.push(w3);
+
+      el.textContent = scene.join('\n');
+    }
+
+    // Start after boot screen hides (3.2s) - immediately render first frame
+    setTimeout(() => {
+      const animEl = document.getElementById('ship-animation');
+      if (animEl) {
+        animEl.style.opacity = '1';
+        animEl.style.animation = 'none';
+      }
+      renderShip();
+
+      setInterval(() => {
+        frame++;
+        wavePhase = frame % 3;
+        // Ship moves: right to left, loops
+        shipX -= 0.4;
+        if (shipX < -55) shipX = W + 5;
+        renderShip();
+      }, 120);
+    }, 3400);
   </script>
 
 </body>
