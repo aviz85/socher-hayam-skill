@@ -941,6 +941,67 @@
       </div>
     </section>
 
+    <!-- ==============================
+         SETUP / INSTALL
+         ============================== -->
+    <section id="setup" class="reveal">
+      <div class="section-header">
+        <span class="section-number">[05]</span>
+        Setup — התקנה
+      </div>
+
+      <!-- Step A: Chrome Extension -->
+      <div class="panel ltr-text" data-label="// STEP_A: CHROME EXTENSION">
+        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
+          REQUIREMENT: Claude in Chrome Extension
+        </div>
+        <p style="font-size:19px;line-height:1.7;color:var(--green-dim);">
+          This skill uses <span class="highlight-green">browser automation</span> — Claude controls Chrome directly from the terminal.
+          You need the official Chrome extension installed and connected first.
+        </p>
+        <div style="margin-top:20px;border:1px dashed var(--green-dark);padding:16px;">
+          <div style="font-size:16px;color:var(--green-dim);margin-bottom:12px;">// INSTALL STEPS</div>
+          <div style="font-size:20px;line-height:2;">
+            <span style="color:var(--amber);">[1]</span> Install the extension from the Chrome Web Store:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://chromewebstore.google.com/detail/claude-in-chrome/bigdlbgbomaoamkiapnnjkcepfkjiifm"
+               style="color:var(--green);text-shadow:var(--glow);text-decoration:none;font-size:18px;"
+               target="_blank">chromewebstore.google.com → "Claude in Chrome"</a><br>
+            <span style="color:var(--amber);">[2]</span> Sign in to <span class="highlight-green">claude.ai</span> in Chrome (the extension will connect automatically)<br>
+            <span style="color:var(--amber);">[3]</span> Launch Claude Code with the <span class="kbd">--chrome</span> flag to enable browser tools:<br>
+          </div>
+          <div style="margin-top:12px;background:#000;border:1px solid var(--green-dark);padding:12px 16px;font-size:20px;">
+            <span style="color:var(--amber);">$</span> <span style="color:var(--green);text-shadow:var(--glow);">claude --chrome</span>
+          </div>
+          <div style="font-size:17px;color:var(--green-dark);margin-top:8px;">
+            // This enables all mcp__claude-in-chrome__* tools for browser automation
+          </div>
+        </div>
+      </div>
+
+      <!-- Step B: Install the skill -->
+      <div class="panel ltr-text" data-label="// STEP_B: INSTALL SKILL">
+        <div style="font-family:'Press Start 2P',monospace;font-size:10px;color:var(--amber);margin-bottom:16px;">
+          ONE-COMMAND SKILL INSTALL
+        </div>
+        <p style="font-size:19px;color:var(--green-dim);line-height:1.7;margin-bottom:20px;">
+          Once Claude Code is running, paste this prompt — Claude will install the skill automatically:
+        </p>
+
+        <div style="position:relative;">
+          <div id="install-prompt" style="background:#000;border:2px solid var(--green-dim);box-shadow:var(--glow);padding:20px;font-size:17px;color:var(--green);line-height:1.8;white-space:pre-wrap;direction:ltr;">I found a Claude Code skill I'd like to install: https://github.com/aviz85/socher-hayam-skill
+
+Please consult the claude-code-guide agent to learn how skills work and how to install them, then install this skill for me. The skill file is located at skill/SKILL.md in the repository above. Create the folder ~/.claude/skills/socher-hayam/ if it doesn't exist, and place the SKILL.md file there.</div>
+          <button onclick="copyPrompt()" id="copy-btn" style="position:absolute;top:10px;left:10px;background:var(--green-dark);border:1px solid var(--green-dim);color:var(--green);font-family:'Press Start 2P',monospace;font-size:8px;padding:6px 12px;cursor:pointer;letter-spacing:1px;">
+            [ COPY ]
+          </button>
+        </div>
+        <div id="copy-confirm" style="color:var(--amber);font-size:17px;margin-top:10px;opacity:0;transition:opacity 0.3s;">
+          ✓ Copied to clipboard — paste into Claude Code
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <!-- ==============================
@@ -964,6 +1025,27 @@
   </footer>
 
   <script>
+    // ==============================
+    // COPY PROMPT
+    // ==============================
+    function copyPrompt() {
+      const text = document.getElementById('install-prompt').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const confirm = document.getElementById('copy-confirm');
+        const btn = document.getElementById('copy-btn');
+        confirm.style.opacity = '1';
+        btn.textContent = '[ COPIED! ]';
+        btn.style.borderColor = 'var(--amber)';
+        btn.style.color = 'var(--amber)';
+        setTimeout(() => {
+          confirm.style.opacity = '0';
+          btn.textContent = '[ COPY ]';
+          btn.style.borderColor = 'var(--green-dim)';
+          btn.style.color = 'var(--green)';
+        }, 3000);
+      });
+    }
+
     // ==============================
     // CUSTOM CURSOR
     // ==============================
