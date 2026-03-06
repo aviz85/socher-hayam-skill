@@ -40,6 +40,22 @@ When a prompt appears asking "how many?" or "כמה?":
 - Press Enter to confirm
 - Do NOT press Enter before typing the number
 
+### Hebrew Yes/No Prompts (כן/לא)
+When the game asks a yes/no question like "האם אתה מוכן להסתכן? כן/לא":
+- **Press `f` for כן (Yes)** — `f` maps to the Hebrew letter כ (Kaf)
+- **Press `k` for לא (No)** — `k` maps to the Hebrew letter ל (Lamed)
+- Then press Enter to confirm
+- This is the Israeli Hebrew keyboard layout used by DOSBox
+
+**Full Israeli Hebrew keyboard mapping (key → Hebrew letter):**
+| Key | Hebrew | Key | Hebrew |
+|-----|--------|-----|--------|
+| f | כ | k | ל |
+| t | א | b | נ |
+| v | ה | n | מ |
+| a | ש | s | ד |
+| e | ק | r | ר |
+
 ### Map Navigation
 - Arrow keys move between destination cities
 - Selected destination shows a **blue box** outline
@@ -186,3 +202,5 @@ When the game loads, press Enter through any intro screens. The game starts auto
 - **Don't over-navigate on map** — go Down once for Egypt, Up once from Egypt for Israel
 - **After buying, Escape returns to main menu** — use Escape if stuck in buy/sell screen
 - **Extension disconnects** — call `tabs_context_mcp` to reconnect, then continue
+- **כן/לא prompts** — press `f` (= כ) for Yes, `k` (= ל) for No, then Enter
+- **Night sailing prompt** — say כן (`f` + Enter) to sail immediately; saying לא waits until morning (safer)
